@@ -1,0 +1,15 @@
+
+SELECT * FROM
+
+(
+
+	SELECT ID, SaleNo,	ROW_NUMBER() OVER(PARTITION BY SaleNo ORDER BY SaleNo) as RowNum
+
+	FROM
+
+	[tbl_SaleDetail]
+
+
+) sd
+
+WHERE RowNum>1
