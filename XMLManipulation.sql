@@ -68,3 +68,30 @@ SET @Item_XML='<ItemDetails>
 	--truncate table tbl_Item_Details
 --------------------------------------------------------- Looping XML Ends
 select * from tbl_Item_Details
+
+
+--------------------------XML Manipulation Live Example
+
+
+<SelectOptions><item><OptionLabel>A</OptionLabel><OptionQst>\[30m\]
+</OptionQst></item><item><OptionLabel>B</OptionLabel><OptionQst>\[10m\]
+</OptionQst></item><item><OptionLabel>C</OptionLabel><OptionQst> \[60m\]
+</OptionQst></item><item><OptionLabel>D</OptionLabel><OptionQst> \[20m\]
+</OptionQst></item></SelectOptions>3
+
+
+
+
+SELECT @SQLXML=optionsXML 
+
+FROM TBL_XML_DATA
+
+
+SELECT 
+
+		RTRIM(LTRIM(iTag.iCol.value('OptionLabel[1]','nvarchar(max)')))as OptionLabel ,
+		RTRIM(LTRIM(iTag.iCol.value('OptionQst[1]','nvarchar(max)'))) as OptionQst 
+					 
+FROM
+
+@SQLXML.nodes('/SelectOptions/item') iTag(iCol)
